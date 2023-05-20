@@ -5,27 +5,30 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "users")
+@Table(name = "user_info")
 @AllArgsConstructor
 @NoArgsConstructor
 @Setter
 @Getter
-public class Users {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private Long id;
+public class Users extends BaseEntity{
 
-    @Column(name = "name")
+    @Column(name = "name",unique = true)
     private String name;
 
-    @Column(name = "email")
-    private String email;
+    @Column(name = "password")
+    private String password;
+
+    @Column(name ="has_rolled_today")
+    private boolean hasRolledToday;
+
+    @OneToMany(mappedBy = "user")
+    private List<DailyJackpotRolls> dailyJackpotRolls;
+
+    @OneToOne(mappedBy = "user")
+    private SavingsHistory savingsHistory;
 }

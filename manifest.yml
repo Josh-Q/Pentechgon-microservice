@@ -7,10 +7,11 @@ applications:
 #  docker:
 #    image: https://hub.docker.com/r/joshq95/angelhack2023/angelhack2023DB:latest
   env:
-#    SPRING_DATASOURCE_URL: jdbc:mysql://mysql.apps.tas.tz-hackathon.net:3306/angelhack2023DB
-    SPRING_DATASOURCE_URL: jdbc:mysql://locahost/angelhack2023DB
-    SPRING_DATASOURCE_USERNAME: sa
-    SPRING_DATASOURCE_PASSWORD: test1234
+    SPRING_DATASOURCE_URL: jdbc:mysql://c231f799-05bf-409f-9efe-564cea2737e6.mysql.service.internal/service_instance_db
+#    SPRING_DATASOURCE_URL: jdbc:mysql://locahost/angelhack2023DB
+    SPRING_DATASOURCE_USERNAME: f3328652056b4270bf437b534da8ff28
+    SPRING_DATASOURCE_PASSWORD: liekr1zu6ckkibq6
     SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
     SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
     SPRING_JPA_HIBERNATE_DDL_AUTO: update
+    SPRING_DATASOURCE_INITIALIZATION_MODE: always

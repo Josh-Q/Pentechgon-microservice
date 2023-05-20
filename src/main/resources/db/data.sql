@@ -1,0 +1,6 @@
+--INSERT INTO user_info VALUES (1,'Olivia','HAHA1', false);
+--INSERT INTO user_info VALUES (2,'Ethan','HAHA1', false);
+--INSERT INTO user_info VALUES (3,'Ava','HAHA1', false);
+--INSERT INTO user_info VALUES (4,'Liam','HAHA1', false);
+--INSERT INTO user_info VALUES (5,'Isabella','HAHA1', false);
+--
