@@ -4,3 +4,13 @@ applications:
   instances: 1
   host: hello-spring-cloud-${random-word}
   path: target/hello-spring-cloud-0.0.1.BUILD-SNAPSHOT.jar
+#  docker:
+#    image: https://hub.docker.com/r/joshq95/angelhack2023/angelhack2023DB:latest
+  env:
+#    SPRING_DATASOURCE_URL: jdbc:mysql://mysql.apps.tas.tz-hackathon.net:3306/angelhack2023DB
+    SPRING_DATASOURCE_URL: jdbc:mysql://locahost/angelhack2023DB
+    SPRING_DATASOURCE_USERNAME: sa
+    SPRING_DATASOURCE_PASSWORD: test1234
+    SPRING_DATASOURCE_DRIVER_CLASS_NAME: com.mysql.cj.jdbc.Driver
+    SPRING_JPA_DATABASE_PLATFORM: org.hibernate.dialect.MySQL8Dialect
+    SPRING_JPA_HIBERNATE_DDL_AUTO: update
