@@ -1,5 +1,6 @@
 package helloworld.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import helloworld.api.dto.JackpotRollValuesDTO;
 import lombok.AllArgsConstructor;
@@ -29,5 +30,6 @@ public class DailyJackpotRolls extends BaseEntity{
     private Timestamp createdAt;
 
     @OneToMany(mappedBy = "dailyJackpotRolls", cascade = CascadeType.ALL)
+    @JsonBackReference
     private List<JackpotRollValues> jackpotRollValues;
 }
