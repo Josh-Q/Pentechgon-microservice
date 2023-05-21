@@ -5,6 +5,7 @@ package helloworld.api.controller;
 
 import helloworld.api.domain.Users;
 import helloworld.api.dto.GenericItemResponse;
+import helloworld.api.exception.CustomTokenException;
 import helloworld.api.jwt.JwtTokenConfigsService;
 import helloworld.api.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -53,8 +54,8 @@ public class UserController {
             response.setMessage("User's current roll state");
             return new ResponseEntity<>(response, HttpStatus.OK);
         }
-        catch (Exception e){
-            response.setMessage("Invalid JWT token");
+        catch (CustomTokenException e){
+            response.setMessage(e.getMessage());
             return new ResponseEntity<>(response, UNAUTHORIZED);
         }
      }

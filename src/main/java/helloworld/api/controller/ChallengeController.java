@@ -6,6 +6,7 @@ package helloworld.api.controller;
 import helloworld.api.domain.Users;
 import helloworld.api.dto.ChallengeRequestDTO;
 import helloworld.api.dto.GenericItemResponse;
+import helloworld.api.exception.CustomTokenException;
 import helloworld.api.jwt.JwtTokenConfigsService;
 import helloworld.api.service.challenge.ChallengeService;
 import helloworld.api.service.user.UserService;
@@ -23,6 +24,7 @@ import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import java.util.List;
 
+import static org.springframework.http.HttpStatus.BAD_REQUEST;
 import static org.springframework.http.HttpStatus.UNAUTHORIZED;
 
 
@@ -48,8 +50,10 @@ public class ChallengeController {
     @PostMapping("")
     public ResponseEntity<GenericItemResponse> acceptOrRejectChallenge(@Valid @RequestBody ChallengeRequestDTO challengeRequestDTO,
                                                                        HttpServletRequest request) {
-        Users user = jwtTokenConfigsService.verifyToken(request);
+
         GenericItemResponse response = new GenericItemResponse();
+        try{
+        Users user = jwtTokenConfigsService.verifyToken(request);
 
 //        if(user.isHasRolledToday()){
 //            response.setMessage("You have already rolled for today !");
@@ -58,6 +62,17 @@ public class ChallengeController {
             response.setData(challengeService.acceptOrRejectChallenge(user,challengeRequestDTO));
             response.setMessage("Challenge " + (challengeRequestDTO.isHasGaveUp() ? "Failed" : "Accepted" ));
 //        }
-        return new ResponseEntity<>(response, HttpStatus.OK);
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+        catch (CustomTokenException e){
+        response.setMessage(e.getMessage());
+        return new ResponseEntity<>(response, UNAUTHORIZED);
+    }
+        catch (IllegalArgumentException e){
+            response.setMessage(e.getMessage());
+            return new ResponseEntity<>(response,BAD_REQUEST);
+        }
+
+
      }
 }

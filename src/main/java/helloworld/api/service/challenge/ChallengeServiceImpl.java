@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -52,17 +53,31 @@ public class ChallengeServiceImpl implements ChallengeService {
 
             try{
 
-            DailyJackpotRolls dailyJackpotRolls = new DailyJackpotRolls(user, Timestamp.valueOf(TimeHandler.now()), jackpotRollValues);
-            user.getDailyJackpotRolls().add(dailyJackpotRolls);
+                DailyJackpotRolls dailyJackpotRolls = new DailyJackpotRolls();
+                dailyJackpotRolls.setUser(user);
+                dailyJackpotRolls.setCreatedAt(Timestamp.valueOf(TimeHandler.now()));
 
-            user.setHasRolledToday(true);
-            Users users = userRepository.save(user);
+                List<JackpotRollValues> jackpotRollValuesList = new ArrayList<>();
+                for (JackpotRollValues value : jackpotRollValues) {
+                    JackpotRollValues jackpotRollValue = new JackpotRollValues();
+                    jackpotRollValue.setDailyJackpotRolls(dailyJackpotRolls);
+                    jackpotRollValue.setValue(value.getValue());
+                    jackpotRollValuesList.add(jackpotRollValue);
+                }
 
-            DailyJackpotRolls dailyJackpotRolls1 = users.getDailyJackpotRolls().stream()
+                dailyJackpotRolls.setJackpotRollValues(jackpotRollValuesList);
+
+                user.getDailyJackpotRolls().add(dailyJackpotRolls);
+                user.setHasRolledToday(true);
+
+                Users savedUser = userRepository.save(user);
+
+
+                DailyJackpotRolls savedDailyJackpotRolls = savedUser.getDailyJackpotRolls().stream()
                     .max(Comparator.comparing(DailyJackpotRolls::getCreatedAt))
                     .orElse(null);
 
-            return dailyJackpotRollsMapper.toDailyJackpotRollsDTO(dailyJackpotRolls1);
+            return dailyJackpotRollsMapper.toDailyJackpotRollsDTO(savedDailyJackpotRolls);
             }
             catch (Exception e){
 //                undoSavingsHistory(updatedSavingsHistory,previousSavingsHistory);

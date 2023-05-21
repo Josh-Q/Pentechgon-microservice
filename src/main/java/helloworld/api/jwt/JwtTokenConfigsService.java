@@ -2,12 +2,14 @@ package helloworld.api.jwt;
 
 import helloworld.api.constants.Constants;
 import helloworld.api.domain.Users;
+import helloworld.api.exception.CustomTokenException;
 import helloworld.api.service.user.UserService;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpServletRequest;
@@ -64,8 +66,7 @@ public class JwtTokenConfigsService {
         if (optionalUser.isPresent() && expirationTime >= System.currentTimeMillis()) {
             return optionalUser.get();
         }
-
-        throw new IllegalArgumentException("Invalid token");
+        throw new CustomTokenException(HttpStatus.BAD_REQUEST,"Invalid JWT token");
 
     }
 }
