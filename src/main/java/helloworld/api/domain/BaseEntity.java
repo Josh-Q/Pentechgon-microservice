@@ -17,6 +17,6 @@ public class BaseEntity {
 //    @GeneratedValue(strategy = GenerationType.TABLE, generator = "base_table_generator")
 //    @TableGenerator(name = "base_table_generator", table = "id_generator", pkColumnName = "id_name", pkColumnValue = "base_entity_id", valueColumnName = "id_value")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID")
+    @Column(name = "id")
     private Long id;
 }

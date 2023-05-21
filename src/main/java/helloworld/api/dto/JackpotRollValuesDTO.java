@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class JackpotRollValuesDTO {
-    private Long id;
+    private Integer id;
     private Integer value;
 }

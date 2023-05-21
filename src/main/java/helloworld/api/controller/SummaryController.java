@@ -43,7 +43,7 @@ public class SummaryController {
         GenericItemResponse response = new GenericItemResponse();
         try{
             Users user = jwtTokenConfigsService.verifyToken(request);
-            response.setData(savingsHistoryService.findByUserId(user.getId()));
+            response.setData(savingsHistoryService.findSummaryByUserId(user.getId()));
             response.setMessage("Challenge summary");
             return new ResponseEntity<>(response, HttpStatus.OK);
         }

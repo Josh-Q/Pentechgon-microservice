@@ -18,7 +18,7 @@ import java.sql.Timestamp;
 public class JackpotRollValues extends BaseEntity{
 
     @ManyToOne
-    @JoinColumn(name = "daily_jackpot_rolls_id", referencedColumnName = "id")
+    @JoinColumn(name = "daily_jackpot_rolls_id")
     private DailyJackpotRolls dailyJackpotRolls;
 
     @Column(name = "value")

@@ -15,7 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Validated
 public class DailyJackpotRollsDTO {
-    private Long id;
+    private Integer id;
     private Timestamp createdAt;
     private List<JackpotRollValuesDTO> jackpotRollValuesDTOList;
 }

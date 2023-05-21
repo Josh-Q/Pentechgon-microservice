@@ -1,23 +1,14 @@
 package helloworld.api.service.savingshistory;
 
-import helloworld.api.config.TimeHandler;
-import helloworld.api.domain.DailyJackpotRolls;
-import helloworld.api.domain.JackpotRollValues;
 import helloworld.api.domain.SavingsHistory;
 import helloworld.api.domain.Users;
-import helloworld.api.dto.ChallengeRequestDTO;
-import helloworld.api.dto.DailyJackpotRollsDTO;
-import helloworld.api.dto.DailyJackpotRollsMapper;
+import helloworld.api.dto.*;
 import helloworld.api.repository.SavingsHistoryRepository;
-import helloworld.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
-import java.util.Comparator;
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Transactional
 @Service
@@ -25,9 +16,11 @@ public class SavingsHistoryServiceImpl implements SavingsHistoryService {
 
     private final SavingsHistoryRepository savingsHistoryRepository;
 
+    private final SavingsHistoryMapper savingsHistoryMapper;
     @Autowired
-    public SavingsHistoryServiceImpl(SavingsHistoryRepository savingsHistoryRepository) {
+    public SavingsHistoryServiceImpl(SavingsHistoryRepository savingsHistoryRepository, SavingsHistoryMapper savingsHistoryMapper) {
         this.savingsHistoryRepository = savingsHistoryRepository;
+        this.savingsHistoryMapper = savingsHistoryMapper;
     }
 
     @Override
@@ -72,7 +65,8 @@ public class SavingsHistoryServiceImpl implements SavingsHistoryService {
     }
 
     @Override
-    public SavingsHistory findByUserId(Long userId) {
-        return savingsHistoryRepository.findByUserId(userId);
+    public SummaryResponseDTO findSummaryByUserId(Long userId) {
+       Optional<SavingsHistory> savingsHistoryOptional =  savingsHistoryRepository.findByUserId(userId);
+      return savingsHistoryOptional.isPresent() ? savingsHistoryMapper.toSummaryResponseDTO(savingsHistoryOptional.get()): new SummaryResponseDTO(0,0,0,0,0);
     }
 }

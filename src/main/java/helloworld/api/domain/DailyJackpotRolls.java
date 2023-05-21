@@ -21,7 +21,7 @@ import java.util.List;
 public class DailyJackpotRolls extends BaseEntity{
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JoinColumn(name = "user_id")
     @JsonIgnore
     private Users user;
 
