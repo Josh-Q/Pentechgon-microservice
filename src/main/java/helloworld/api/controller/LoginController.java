@@ -4,7 +4,9 @@ package helloworld.api.controller;
 //import jakarta.servlet.http.HttpServletRequest;
 import helloworld.api.domain.Users;
 import helloworld.api.dto.GenericItemResponse;
+import helloworld.api.dto.LoginMapper;
 import helloworld.api.dto.LoginRequest;
+import helloworld.api.dto.LoginResponseDTO;
 import helloworld.api.jwt.JwtTokenConfigsService;
 import helloworld.api.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,13 +31,15 @@ public class LoginController {
 
     private final UserService userService;
     private final JwtTokenConfigsService jwtTokenConfigsService;
+    private final LoginMapper loginMapper;
     // check CSRF
 //    private final LoggedInUserService loggedInUserService;
 
     @Autowired
-    public LoginController(UserService userService, JwtTokenConfigsService jwtTokenConfigsService) {
+    public LoginController(UserService userService, JwtTokenConfigsService jwtTokenConfigsService, LoginMapper loginMapper) {
         this.userService = userService;
         this.jwtTokenConfigsService = jwtTokenConfigsService;
+        this.loginMapper = loginMapper;
     }
 
     @GetMapping("")
@@ -68,7 +72,9 @@ public class LoginController {
         if(optionalUser.isPresent()){
             Users user = optionalUser.get();
             String token = jwtTokenConfigsService.generateToken(user.getId());
-            response.setData(token);
+
+//            LoginResponseDTO loginResponseDTO = new LoginResponseDTO(user,token);
+            response.setData(loginMapper.toLoginResponseDTO(user,token));
             HttpHeaders headers = new HttpHeaders();
             headers.set("Authorization", "Bearer " + token);
 
