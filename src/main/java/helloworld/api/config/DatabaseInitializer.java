@@ -24,7 +24,6 @@ public class DatabaseInitializer implements CommandLineRunner {
         // Code to insert data into the database
         userRepository.deleteAll();
 
-
         Users user1 = new Users("John", "HAHA1", false, null, null);
         Users user2 = new Users("Doe", "HAHA1", false, null, null);
         Users user3 = new Users("Jane", "HAHA1", false, null, null);

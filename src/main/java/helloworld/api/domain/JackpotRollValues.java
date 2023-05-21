@@ -14,6 +14,7 @@ import java.sql.Timestamp;
 @NoArgsConstructor
 @Setter
 @Getter
+//@SequenceGenerator(name = "jackpot_roll_values_generator", sequenceName = "jackpot_roll_values_sequence", allocationSize = 1)
 public class JackpotRollValues extends BaseEntity{
 
     @ManyToOne

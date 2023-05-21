@@ -15,6 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Setter
 @Getter
+//@SequenceGenerator(name = "logged_in_user_generator", sequenceName = "logged_in_user_sequence", allocationSize = 1)
 public class LoggedInUser extends BaseEntity{
 
     @Column(name = "session_id")

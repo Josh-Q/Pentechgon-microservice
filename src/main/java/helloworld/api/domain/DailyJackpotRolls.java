@@ -17,6 +17,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
+//@SequenceGenerator(name = "daily_jackpot_rolls_sequence_generator", sequenceName = "daily_jackpot_rolls_sequence", allocationSize = 1)
 public class DailyJackpotRolls extends BaseEntity{
 
     @ManyToOne

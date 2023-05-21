@@ -14,6 +14,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @Setter
 @Getter
+//@SequenceGenerator(name = "savings_history_generator", sequenceName = "savings_history_sequence", allocationSize = 1)
 public class SavingsHistory extends BaseEntity {
 
     public SavingsHistory(Users users) {

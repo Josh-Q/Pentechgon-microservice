@@ -15,6 +15,7 @@ import java.util.List;
 @NoArgsConstructor
 @Setter
 @Getter
+//@SequenceGenerator(name = "user_sequence_generator", sequenceName = "user_sequence", allocationSize = 1)
 public class Users extends BaseEntity{
 
     @Column(name = "name",unique = true)
