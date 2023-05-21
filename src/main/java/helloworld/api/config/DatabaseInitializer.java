@@ -22,23 +22,25 @@ public class DatabaseInitializer implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         // Code to insert data into the database
-        if(!userRepository.findByName("John").isPresent()){
-            Users user1 = new Users("John", "HAHA1",false,null,null);
-            Users user2 = new Users("Doe", "HAHA1",false,null,null);
-            Users user3 = new Users("Jane", "HAHA1",false,null,null);
-            Users user4 = new Users("Smith", "HAHA1",false,null,null);
+        userRepository.deleteAll();
+
+
+        Users user1 = new Users("John", "HAHA1", false, null, null);
+        Users user2 = new Users("Doe", "HAHA1", false, null, null);
+        Users user3 = new Users("Jane", "HAHA1", false, null, null);
+        Users user4 = new Users("Smith", "HAHA1", false, null, null);
 //        Users user1 = new Users("John", "HAHA1",false);
 //        Users user2 = new Users("Doe", "HAHA1",false);
 //        Users user3 = new Users("Jane", "HAHA1",false);
 //        Users user4 = new Users("Smith", "HAHA1",false);
-            List<Users> arr = new ArrayList<Users>(){{
-                add(user1);
-                add(user2);
-                add(user3);
-                add(user4);
-            }};
-            userRepository.saveAll(arr);
-        }
+        List<Users> arr = new ArrayList<Users>() {{
+            add(user1);
+            add(user2);
+            add(user3);
+            add(user4);
+        }};
+        userRepository.saveAll(arr);
     }
+
 }
 

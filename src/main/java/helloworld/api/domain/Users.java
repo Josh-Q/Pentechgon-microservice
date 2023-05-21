@@ -26,9 +26,9 @@ public class Users extends BaseEntity{
     @Column(name ="has_rolled_today")
     private boolean hasRolledToday;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<DailyJackpotRolls> dailyJackpotRolls;
 
-    @OneToOne(mappedBy = "user")
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private SavingsHistory savingsHistory;
 }

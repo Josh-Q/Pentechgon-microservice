@@ -7,6 +7,7 @@ import helloworld.api.domain.SavingsHistory;
 import helloworld.api.domain.Users;
 import helloworld.api.dto.*;
 import helloworld.api.repository.UserRepository;
+import helloworld.api.service.savingshistory.SavingsHistoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -21,11 +22,13 @@ import java.util.stream.Collectors;
 public class ChallengeServiceImpl implements ChallengeService {
 
     private final UserRepository userRepository;
+    private final SavingsHistoryService savingsHistoryService;
     private final DailyJackpotRollsMapper dailyJackpotRollsMapper;
 
     @Autowired
-    public ChallengeServiceImpl(UserRepository userRepository, DailyJackpotRollsMapper dailyJackpotRollsMapper) {
+    public ChallengeServiceImpl(UserRepository userRepository, SavingsHistoryService savingsHistoryService, DailyJackpotRollsMapper dailyJackpotRollsMapper) {
         this.userRepository = userRepository;
+        this.savingsHistoryService = savingsHistoryService;
         this.dailyJackpotRollsMapper = dailyJackpotRollsMapper;
     }
 
@@ -41,43 +44,73 @@ public class ChallengeServiceImpl implements ChallengeService {
                     })
                     .collect(Collectors.toList());
 
+
+            SavingsHistory previousSavingsHistory = user.getSavingsHistory();
+
+//            SavingsHistory updatedSavingsHistory = updateSavingsHistory(user,challengeRequestDTO);
+            SavingsHistory updatedSavingsHistory = savingsHistoryService.updateSavingsHistory(user,challengeRequestDTO);
+
+            try{
+
             DailyJackpotRolls dailyJackpotRolls = new DailyJackpotRolls(user, Timestamp.valueOf(TimeHandler.now()), jackpotRollValues);
             user.getDailyJackpotRolls().add(dailyJackpotRolls);
-            updateSavingsHistory(user,challengeRequestDTO.getAmountsToSave().stream().mapToInt(Integer::intValue).sum(),true);
+
             user.setHasRolledToday(true);
             Users users = userRepository.save(user);
 
-        DailyJackpotRolls dailyJackpotRolls1 = users.getDailyJackpotRolls().stream()
-                .max(Comparator.comparing(DailyJackpotRolls::getCreatedAt))
-                .orElse(null);
+            DailyJackpotRolls dailyJackpotRolls1 = users.getDailyJackpotRolls().stream()
+                    .max(Comparator.comparing(DailyJackpotRolls::getCreatedAt))
+                    .orElse(null);
 
             return dailyJackpotRollsMapper.toDailyJackpotRollsDTO(dailyJackpotRolls1);
+            }
+            catch (Exception e){
+//                undoSavingsHistory(updatedSavingsHistory,previousSavingsHistory);
+                savingsHistoryService.undoSavingsHistory(updatedSavingsHistory,previousSavingsHistory);
+
+                throw new IllegalArgumentException("Failed to update savings history");
+            }
     }
 
-    private void updateSavingsHistory(Users user, int sumOfRolls, boolean hasGiveUp) {
-        SavingsHistory savingsHistory = user.getSavingsHistory();
-
-        if (savingsHistory == null) {
-            savingsHistory = new SavingsHistory();
-            user.setSavingsHistory(savingsHistory);
-        }
-
-        if (hasGiveUp) {
-            savingsHistory.setCurrentStreakSavings(0);
-            savingsHistory.setCurrentStreakDays(0);
-        } else {
-            int updatedCurrentStreakDays = savingsHistory.getCurrentStreakDays() + 1;
-            int updatedCurrentStreakSavings = savingsHistory.getCurrentStreakSavings() + sumOfRolls;
-            int maxStreakSavings = Math.max(updatedCurrentStreakSavings, savingsHistory.getMaxStreakSavings());
-            int maxStreakDays = Math.max(updatedCurrentStreakDays, savingsHistory.getMaxStreakDays());
-
-            savingsHistory.setCurrentStreakDays(updatedCurrentStreakDays);
-            savingsHistory.setCurrentStreakSavings(updatedCurrentStreakSavings);
-            savingsHistory.setMaxStreakSavings(maxStreakSavings);
-            savingsHistory.setMaxStreakDays(maxStreakDays);
-            savingsHistory.setTotalSavings(savingsHistory.getTotalSavings() + sumOfRolls);
-        }
-    }
+//    private void undoSavingsHistory(SavingsHistory savingsHistory,SavingsHistory previousSavingsHistory){
+//
+//        savingsHistory.setMaxStreakSavings(previousSavingsHistory.getMaxStreakSavings());
+//        savingsHistory.setCurrentStreakSavings(previousSavingsHistory.getCurrentStreakSavings());
+//        savingsHistory.setMaxStreakDays(previousSavingsHistory.getMaxStreakDays());
+//        savingsHistory.setCurrentStreakDays(previousSavingsHistory.getCurrentStreakDays());
+//        savingsHistory.setTotalSavings(previousSavingsHistory.getTotalSavings());
+//
+//        return savingsHistoryRepository.save(savingsHistory);
+//    }
+//
+//    private SavingsHistory updateSavingsHistory(Users user, ChallengeRequestDTO challengeRequestDTO) {
+//        int sumOfRolls = challengeRequestDTO.getAmountsToSave().stream().mapToInt(Integer::intValue).sum();
+//        boolean hasGiveUp = challengeRequestDTO.isHasGaveUp();
+//
+//        SavingsHistory savingsHistory = user.getSavingsHistory();
+//
+//        if (savingsHistory == null) {
+//            savingsHistory = new SavingsHistory();
+//            user.setSavingsHistory(savingsHistory);
+//        }
+//
+//        if (hasGiveUp) {
+//            savingsHistory.setCurrentStreakSavings(0);
+//            savingsHistory.setCurrentStreakDays(0);
+//        } else {
+//            int updatedCurrentStreakDays = savingsHistory.getCurrentStreakDays() + 1;
+//            int updatedCurrentStreakSavings = savingsHistory.getCurrentStreakSavings() + sumOfRolls;
+//            int maxStreakSavings = Math.max(updatedCurrentStreakSavings, savingsHistory.getMaxStreakSavings());
+//            int maxStreakDays = Math.max(updatedCurrentStreakDays, savingsHistory.getMaxStreakDays());
+//
+//            savingsHistory.setCurrentStreakDays(updatedCurrentStreakDays);
+//            savingsHistory.setCurrentStreakSavings(updatedCurrentStreakSavings);
+//            savingsHistory.setMaxStreakSavings(maxStreakSavings);
+//            savingsHistory.setMaxStreakDays(maxStreakDays);
+//            savingsHistory.setTotalSavings(savingsHistory.getTotalSavings() + sumOfRolls);
+//        }
+//        return savingsHistoryRepository.save(savingsHistory);
+//    }
 
 
 }

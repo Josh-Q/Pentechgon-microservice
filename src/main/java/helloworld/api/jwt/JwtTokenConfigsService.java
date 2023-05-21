@@ -35,7 +35,7 @@ public class JwtTokenConfigsService {
         Key key = Keys.hmacShaKeyFor(Constants.Secrets.KEY.getSecretKey().getBytes());
 
         Instant now = Instant.now();
-        Instant expiryInstant = now.plus(15, ChronoUnit.MINUTES); // Set expiry for 15 mins from now
+        Instant expiryInstant = now.plus(1500, ChronoUnit.MINUTES); // Set expiry for 1500 mins from now
         Date expiryDate = Date.from(expiryInstant);
 
         return Jwts.builder()

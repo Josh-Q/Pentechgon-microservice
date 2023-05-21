@@ -27,6 +27,6 @@ public class DailyJackpotRolls extends BaseEntity{
     @Column(name = "created_at")
     private Timestamp createdAt;
 
-    @OneToMany(mappedBy = "dailyJackpotRolls")
+    @OneToMany(mappedBy = "dailyJackpotRolls", cascade = CascadeType.ALL)
     private List<JackpotRollValues> jackpotRollValues;
 }

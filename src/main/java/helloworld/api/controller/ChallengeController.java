@@ -13,13 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
+import org.springframework.validation.annotation.Validated;
 import javax.validation.Valid;
 import java.util.List;
 
@@ -51,13 +51,13 @@ public class ChallengeController {
         Users user = jwtTokenConfigsService.verifyToken(request);
         GenericItemResponse response = new GenericItemResponse();
 
-        if(user.isHasRolledToday()){
-            response.setMessage("You have already rolled for today !");
-        }
-        else{
+//        if(user.isHasRolledToday()){
+//            response.setMessage("You have already rolled for today !");
+//        }
+//        else{
             response.setData(challengeService.acceptOrRejectChallenge(user,challengeRequestDTO));
             response.setMessage("Challenge " + (challengeRequestDTO.isHasGaveUp() ? "Failed" : "Accepted" ));
-        }
+//        }
         return new ResponseEntity<>(response, HttpStatus.OK);
      }
 }

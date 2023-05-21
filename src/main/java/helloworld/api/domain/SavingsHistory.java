@@ -16,6 +16,15 @@ import javax.persistence.*;
 @Getter
 public class SavingsHistory extends BaseEntity {
 
+    public SavingsHistory(Users users) {
+        this.user = users;
+        this.maxStreakSavings = 0;
+        this.currentStreakSavings = 0;
+        this.maxStreakDays = 0;
+        this.currentStreakDays = 0;
+        this.totalSavings = 0;
+    }
+
     @OneToOne
     @JoinColumn(name = "user_id",referencedColumnName = "id")
     private Users user;
