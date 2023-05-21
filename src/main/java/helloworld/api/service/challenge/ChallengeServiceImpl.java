@@ -72,7 +72,6 @@ public class ChallengeServiceImpl implements ChallengeService {
 
                 Users savedUser = userRepository.save(user);
 
-
                 DailyJackpotRolls savedDailyJackpotRolls = savedUser.getDailyJackpotRolls().stream()
                     .max(Comparator.comparing(DailyJackpotRolls::getCreatedAt))
                     .orElse(null);

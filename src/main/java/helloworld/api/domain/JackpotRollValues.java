@@ -1,5 +1,6 @@
 package helloworld.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -19,6 +20,7 @@ public class JackpotRollValues extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "daily_jackpot_rolls_id")
+    @JsonBackReference
     private DailyJackpotRolls dailyJackpotRolls;
 
     @Column(name = "value")
