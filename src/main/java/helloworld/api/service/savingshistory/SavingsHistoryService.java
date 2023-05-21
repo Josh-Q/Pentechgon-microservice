@@ -8,4 +8,5 @@ import helloworld.api.dto.DailyJackpotRollsDTO;
 public interface SavingsHistoryService {
     SavingsHistory undoSavingsHistory(SavingsHistory savingsHistory, SavingsHistory previousSavingsHistory);
     SavingsHistory updateSavingsHistory(Users user, ChallengeRequestDTO challengeRequestDTO);
+    SavingsHistory findByUserId(Long userId);
 }

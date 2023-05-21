@@ -71,5 +71,8 @@ public class SavingsHistoryServiceImpl implements SavingsHistoryService {
         return savingsHistoryRepository.save(savingsHistory);
     }
 
-
+    @Override
+    public SavingsHistory findByUserId(Long userId) {
+        return savingsHistoryRepository.findByUserId(userId);
+    }
 }
