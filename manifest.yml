@@ -1,9 +1,9 @@
 ---
 applications:
-- name: hello-spring-cloud
+- name: pentechgon-microservice
   instances: 1
-  host: hello-spring-cloud-${random-word}
-  path: target/hello-spring-cloud-0.0.1.BUILD-SNAPSHOT.jar
+  host: pentechgon-microservice-${random-word}
+  path: target/pentechgon-microservice-0.0.1.BUILD-SNAPSHOT.jar
 #  docker:
 #    image: https://hub.docker.com/r/joshq95/angelhack2023/angelhack2023DB:latest
   env:

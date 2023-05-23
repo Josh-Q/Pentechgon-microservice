@@ -42,25 +42,25 @@ public class LoginController {
         this.loginMapper = loginMapper;
     }
 
-    @GetMapping("")
-    public ResponseEntity<GenericItemResponse> getUserOne() {
-        GenericItemResponse response = new GenericItemResponse();
-
-        Optional<Users> optionalUser =  userService.findAll().stream().findFirst();
-
-        if(optionalUser.isPresent()){
-            Users user = optionalUser.get();
-            String token = jwtTokenConfigsService.generateToken(user.getId());
-            response.setData(token);
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("Authorization", "Bearer " + token);
-
-            response.setMessage("get user 1 passed");
-            return new ResponseEntity<>(response, HttpStatus.OK);
-        };
-        response.setMessage("get user 1 failed");
-        return new ResponseEntity<>(response, UNAUTHORIZED);
-    }
+//    @GetMapping("")
+//    public ResponseEntity<GenericItemResponse> getUserOne() {
+//        GenericItemResponse response = new GenericItemResponse();
+//
+//        Optional<Users> optionalUser =  userService.findAll().stream().findFirst();
+//
+//        if(optionalUser.isPresent()){
+//            Users user = optionalUser.get();
+//            String token = jwtTokenConfigsService.generateToken(user.getId());
+//            response.setData(token);
+//            HttpHeaders headers = new HttpHeaders();
+//            headers.set("Authorization", "Bearer " + token);
+//
+//            response.setMessage("get user 1 passed");
+//            return new ResponseEntity<>(response, HttpStatus.OK);
+//        };
+//        response.setMessage("get user 1 failed");
+//        return new ResponseEntity<>(response, UNAUTHORIZED);
+//    }
 
 
     @PostMapping("")

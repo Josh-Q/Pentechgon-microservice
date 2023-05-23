@@ -1,7 +1,7 @@
-Hello Spring Cloud Connectors
+Pentechgon microservice
 ============
 
-A [Spring Boot application](http://github.com/cloudfoundry-samples/hello-spring-cloud) that uses [Spring Cloud Connectors](https://cloud.spring.io/spring-cloud-connectors/) to connect to cloud services and get information about cloud environment.
+A Spring Boot application that uses handles the backend logic for XPot
 
 ## Building the application
 
@@ -11,51 +11,50 @@ Use Maven to build the application:
 $ mvn clean package
 ~~~
 
-## Running the application on Cloud Foundry
+- [Project Description](#project-description)
+- [Technologies](#technologies)
+- [Features](#features)
+- [Getting Started](#getting-started)
+- [API Documentation](#api-documentation)
+- [Contributing](#contributing)
+- [License](#license)
 
-To run the application on Cloud Foundry, first target and long into a Cloud Foundry environment, then run this command:
+## Project Description
 
-~~~
-$ cf push
-~~~
+Welcome to XPot, the ultimate savings challenge app! XPot is designed to help consumers develop healthy saving habits by gamifying the saving process. With XPot, you can create your own virtual savings pot and watch it grow as you save money. Challenge your friends, motivate each other, and see who can achieve the longest saving streak and build the biggest XPot!
 
-The application will be deployed using settings in the provided `manifest.yml` file. The output from the command will show the URL that has been assigned to the application. Browse to the provided URL to view information about the application.
+XPot goes beyond just being a savings app. It fosters a supportive community of like-minded individuals who are on a mission to improve their financial discipline and achieve their savings goals together.
 
-### Creating and binding services
+## Technologies
 
-Using the provided manifest, the application will not be bound to any data services. The application UI will show default connections provided by Spring Boot. You can create relational database, Redis, MongoDB, and AMQP services and bind them to the application to test creation of service connections with Spring Cloud Connectors.
+Java SpringBoot using JWT to validate user access
 
-On [Pivotal Web Services](https://run.pivotal.io/) you can create and bind each type of service using these commands:
-
-~~~
-$ cf create-service cleardb spark mysql-service
-$ cf bind-service hello-spring-cloud mysql-service
-
-$ cf create-service rediscloud 30mb redis-service
-$ cf bind-service hello-spring-cloud redis-service
-
-$ cf create-service mlab sandbox mongodb-service
-$ cf bind-service hello-spring-cloud mongodb-service
-
-$ cf create-service cloudamqp spark amqp-service
-$ cf bind-service hello-spring-cloud amqp-service
-
-$ cf restart
-~~~
-
-On [Pivotal Cloud Foundry](https://pivotal.io/platform) you can create and bind each type of service using these commands:
+## Getting Started
 
 ~~~
-$ cf create-service p-mysql 100mb mysql-service
-$ cf bind-service hello-spring-cloud mysql-service
-
-$ cf create-service p-redis shared-vm redis-service
-$ cf bind-service hello-spring-cloud redis-service
-
-$ cf create-service p-rabbitmq standard amqp-service
-$ cf bind-service hello-spring-cloud amqp-service
-
-$ cf restart
+$ mvn clean package
 ~~~
+This will compile the source code and package it into an executable JAR file.
 
-Consult the [Pivotal Cloud Foundry documentation](http://docs.pivotal.io/) for more details.
+## API Documentation
+The backend code provides the following APIs:
+
+Login: POST /api/v1/login
+
+This API is used for user authentication. It expects a JSON payload containing the user's credentials and returns a JWT token upon successful authentication.
+Jackpot Status: GET /api/v1/user/jackpot
+
+This API retrieves the status of the jackpot for the user. It requires a valid JWT token for authentication.
+Savings Summary: GET /api/v1/summary
+
+This API fetches the summary of the user's savings. It requires a valid JWT token for authentication.
+Challenge Initiate: POST /api/v1/challenge
+
+This API is used to initiate a savings challenge. It expects a JSON payload containing the challenge details and requires a valid JWT token for authentication.
+Please refer to the API documentation or code implementation for more details on request/response structures and any additional parameters required.
+
+## Contributing
+Contributions to the project are welcome. If you want to contribute, please follow the standard guidelines for pull requests and issues (put in a pull request / submit a new issue)
+
+
+

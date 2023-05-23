@@ -55,6 +55,7 @@ public class ChallengeController {
         try{
         Users user = jwtTokenConfigsService.verifyToken(request);
 
+        // Limit users from rolling once a day
 //        if(user.isHasRolledToday()){
 //            response.setMessage("You have already rolled for today !");
 //        }

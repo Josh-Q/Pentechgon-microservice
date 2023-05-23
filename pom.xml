@@ -4,10 +4,10 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<groupId>helloworld</groupId>
-	<artifactId>hello-spring-cloud</artifactId>
+	<artifactId>pentechgon-microservice</artifactId>
 	<version>0.0.1.BUILD-SNAPSHOT</version>
 
-	<name>hello-spring-cloud</name>
+	<name>pentechgon-microservice</name>
 	<description>Spring Cloud Hello World with Spring Boot</description>
 
 	<parent>
@@ -90,6 +90,11 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>6.2.0.Final</version>
 		</dependency>
+<!--		<dependency>-->
+<!--			<groupId>org.springframework.boot</groupId>-->
+<!--			<artifactId>spring-boot-starter-security</artifactId>-->
+<!--		</dependency>-->
+
 
 
 

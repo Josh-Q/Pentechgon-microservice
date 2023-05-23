@@ -35,15 +35,15 @@ public class UserController {
         this.jwtTokenConfigsService = jwtTokenConfigsService;
     }
 
-    @GetMapping("/all")
-    public ResponseEntity<GenericItemResponse> getAllUsers() {
-        GenericItemResponse response = new GenericItemResponse();
-
-        List<Users> users =  userService.findAll();
-        response.setData(users);
-        response.setMessage("All users");
-        return new ResponseEntity<>(response, HttpStatus.OK);
-     }
+//    @GetMapping("/all")
+//    public ResponseEntity<GenericItemResponse> getAllUsers() {
+//        GenericItemResponse response = new GenericItemResponse();
+//
+//        List<Users> users =  userService.findAll();
+//        response.setData(users);
+//        response.setMessage("All users");
+//        return new ResponseEntity<>(response, HttpStatus.OK);
+//     }
 
     @GetMapping("/jackpot")
     public ResponseEntity<GenericItemResponse> getJackpotState(HttpServletRequest request) {
